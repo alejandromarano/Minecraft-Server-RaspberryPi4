@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "backup del mundo del minecraft iniciado..."
+
+rm -rf /home/pi/backup_minecraft_world/old
+mv /home/pi/backup_minecraft_world/new /home/pi/backup_minecraft_world/old
+mkdir /home/pi/backup_minecraft_world/new
+
+cd /home/pi/backup_minecraft_world/new
+
+d="$(date +"%d-%m-%Y")"
+
+mkdir "$d"
+
+cd "$d"
+
+echo "deteniendo contenedores..."
+
+docker ps > contenedores.txt
+
+docker stop $(docker ps -a -q)
+
+echo "copiando datos..."
+
+cp -r /home/pi/minecraft-compose/minecraft-data ./
+
+echo "iniciando contenedores..."
+
+docker start $(docker ps -a -q)
+
+echo "listo"
