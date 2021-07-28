@@ -1,0 +1,20 @@
+version: '2.1'
+services:
+ minecraft:
+   image: itzg/minecraft-server
+   restart: unless-stopped
+   ports:
+     - "25565:25565"
+   environment:
+     EULA: "TRUE"
+     VERSION: "LATEST"
+     ONLINE_MODE: "FALSE"
+     PLAYER_IDLE_TIMEOUT: "0"
+     TZ: "America/Argentina/Cordoba"
+     DIFICULTY: "hard"
+   deploy:
+     resources:
+       limits:
+         memory: 1.5G
+   volumes:
+    - ./minecraft-data:/data
